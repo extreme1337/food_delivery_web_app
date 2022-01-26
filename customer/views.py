@@ -16,9 +16,9 @@ class Order(View):
     def get(self, request, *args, **kwargs):
         # get every item from each category
         appetizers = MenuItem.objects.filter(category__name__contains='Appetizer')
-        entres = MenuItem.objects.filter(cattegory__name__contains='Entre')
-        deserts = MenuItem.objects.filter(cattegory__name__contains='Desert')
-        drinks = MenuItem.objects.filter(cattegory__name__contains='Drink')
+        entres = MenuItem.objects.filter(category__name__contains='Entre')
+        deserts = MenuItem.objects.filter(category__name__contains='Desert')
+        drinks = MenuItem.objects.filter(category__name__contains='Drink')
         # pass into context
         context = {
             'appetizers': appetizers,
@@ -38,7 +38,7 @@ class Order(View):
         items = request.POST.getlist('items[]')
         
         for item in items:
-            menu_item = MenuItem.get(pk=int(item))
+            menu_item = MenuItem.objects.get(pk=int(item))
             item_data = {
                 'id': menu_item.pk,
                 'name': menu_item.name,
